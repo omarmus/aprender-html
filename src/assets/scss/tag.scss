@@ -1,0 +1,78 @@
+
+.editor-container {
+  margin: 0 auto;
+  width: 960px;
+  padding: 0;
+}
+
+.page-container {
+  background-size: 100% 100%;
+  background-attachment: fixed !important;
+}
+
+.editor-content {
+  height: 2000px;
+  position: relative;
+}
+.tag-edit ul > ul{
+  padding: 0;
+}
+.tag-zindex {
+  position: relative;
+}
+.tag {
+  border: 1px solid transparent;
+  padding: 0;
+  position: absolute;
+
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+  }
+  img {
+    width: 100%;
+  }
+  table {
+    border: 1px solid #333;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid #333;
+    padding: 3px 5px;
+  }
+  hr {
+      border: medium none;
+      margin: 5px 0;
+  }
+  ul, ol,
+  &.ul .note-editor.note-frame .note-editing-area .note-editable {
+    margin: 0;
+    padding-left: 20px;
+  }
+  &.tag-img {
+    width: 600px;
+  }
+  &.tag-table {
+    width: 600px;
+  }
+  &.ol .note-editor.note-frame .note-editing-area .note-editable {
+    padding-left: 3px;
+  }
+  &.ol .note-editable {
+    counter-reset: numeric;
+  }
+  &.ol .note-editable li {
+    counter-increment: numeric;
+    list-style: none;
+    &::before {
+      content: counter(numeric)". ";
+    }
+  }
+  &.tag-div {
+    .tag-zindex, .tag-zindex > div {
+      display: table;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

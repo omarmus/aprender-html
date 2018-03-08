@@ -110,7 +110,7 @@ export default (App, jQuery) => {
         minHeight: 10,
         minWidth: 10,
         handles: handle["complete"],
-        height: 200
+        height: 300
       },
       circle : {
         width : 300,

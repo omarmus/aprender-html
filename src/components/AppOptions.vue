@@ -83,7 +83,7 @@
             <li class="tag-item">
               <a href="#" class="tag-setting" data-option="div" data-toggle="tooltip" data-placement="right" title="&lt;div&gt;">
                 <i class="icon-square"></i>
-                <div class="tag-description">Contenedor</div>
+                <div class="tag-description">Formas</div>
               </a>
             </li>
             <li class="tag-item">
@@ -99,7 +99,7 @@
           <ul class="tag-menu-list">
             <li class="tag-item">
               <a href="#" class="tag-setting" data-option="background">
-                <i class="fa fa-file-image-o"></i>
+                <i class="fa fa-images"></i>
                 <div class="tag-description">Background</div>
               </a>
             </li>

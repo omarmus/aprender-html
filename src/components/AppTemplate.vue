@@ -3,7 +3,7 @@
     <!-- templates -->
     <script type="text/js-tmpl" id="tmpl-div">
       <div class="tag tag-div" id="tag-div-{id}" data-id="{id}" style="width: {width}px; left: {left}px; top: {top}px; height: {height}px;" data-tag="div">
-        <div class="tag-edit tag-zindex" style="z-index: {zIndex};"><div style="border: {borderWidth}px solid {borderColor}; background-color: {bgColor};"></div></div>
+        <div class="tag-edit tag-zindex" style="z-index: {zIndex};"><div style="border: {borderWidth}px solid {borderColor}; background-color: {bgColor}; opacity: {opacity}; border-radius: {borderRadius};"></div></div>
         <div class="tag-counter"></div>
         <div class="tag-inf">&lt;div&gt;</div>
         {options}
@@ -156,12 +156,6 @@
       </div>
     </script>
 
-    <script type="text/js-tmpl" id="tmpl-tag">
-      <div class="tag {class}" style="width: {width}px; left: {left}px; top: {top}px; height: {height}px">
-        <div class="tag-zindex" style="z-index: {zIndex}; border: {borderWidth}px solid {borderColor}; background-color: {bgColor};">{text}</div>
-      </div>
-    </script>
-
     <script type="text/js-tmpl" id="tmpl-options">
       <div class="tag-options {image}">
         <div class="tag-btn-edit">
@@ -175,25 +169,7 @@
     </script>
 
     <script type="text/js-tmpl" id="tmpl-btn-picker">
-      <button style="background-color:{color}" class="note-color-btn" type="button" data-toggle="tooltip" data-placement="bottom" data-color="{color}" title="{color}"></button>
-    </script>
-
-    <script type="text/js-tmpl" id="tmpl-html">
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <title>{title}</title>
-        <link rel="stylesheet" href="css/preview.min.css">
-      </head>
-      <body style="background-color: {bgColor}; background-image: url({bgImage}); background-attachment: {bgAttachment}">
-        <div class="page-container preview">
-          <div class="editor-container">
-            <div class="editor-content" style="height: {height}px;">{tags}</div>
-          </div>
-        </div>
-      </body>
-      </html>
+      <button type="button" class="btn btn-default navbar-btn" id="btn-learn" ><i class="fa fa-star"></i> Lecciones</button>
     </script>
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modal-main">
@@ -327,10 +303,21 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><i class="fa fa-square-o"></i> Insertar contenedor DIV</h4>
+            <h4 class="modal-title"><i class="fa fa-square-o"></i> Insertar forma</h4>
           </div>
           <div class="modal-body">
-            <div class="alert alert-info"><i class="fa fa-info-circle"></i> Un contenedor(div) agrupa un grupo de elementos html</div>
+            <div class="alert alert-info"><i class="fa fa-info-circle"></i> Un contenedor(div) agrupa un grupo de elementos html, también puedes crear formas geométricas con el</div>
+            <div class="row">
+              <div class="col-md-4">
+                <label>¿Qué desea dibujar?</label>
+              </div>
+              <div class="form-group col-md-4">
+                <label><input type="radio" name="forma" id="div-square" checked value="div"> Cuadrado</label>
+              </div>
+              <div class="form-group col-md-4">
+                <label><input type="radio" name="forma" id="div-circle" value="circle"> Círculo</label>
+              </div>
+            </div>
             <div class="row">
               <div class="col-md-4">
                 <div class="setting-bg-color">
@@ -358,13 +345,17 @@
                         <div class="input-group-addon">px</div>
                       </div>
                     </div>
+                    <div class="form-group">
+                      <label for="div-border" class="control-label">Opacidad: {{ opacity }}%</label>
+                      <input type="range" v-model="opacity" id="div-opacity" value="100" maxlength="3" min="0" max="100">
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-dismiss="modal" id="btn-insert-div"><i class="fa fa-check"></i> Insertar</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal" id="btn-insert-div"><i class="fa fa-check"></i> <span>Insertar</span></button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -377,8 +368,8 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title"><i class="fa fa-eye"></i> Vista previa</h4>
           </div>
-          <div class="modal-body">
-            <iframe src="preview.html" name="preview" id="preview" class="preview-iframe"></iframe>
+          <div class="modal-body" id="frame-container">
+            <iframe id="iframe-preview" class="preview-iframe"></iframe>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-check"></i> Terminar</button>
@@ -420,5 +411,37 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal-learning">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><i class="fa fa-star"></i> Aprende HTML</h4>
+          </div>
+          <div class="modal-body" id="frame-container">
+            <div class="alert alert-info">
+              <i class="fa fa-info"></i> Ingresa el código que encontraste para aprender una lección
+            </div>
+            <div class="form-group">
+              <textarea class="form-control input-code"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-check"></i> Validar código</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      opacity: 100
+    }
+  }
+}
+</script>

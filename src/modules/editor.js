@@ -95,9 +95,11 @@ export default (App, jQuery) => {
 
     editor.setProp = function ($tag, prop) {
       $tag.find('.tag-edit').children(prop.tag == 'circle' ? 'div' : prop.tag).css({
-        borderWidth : prop.borderWidth || 0,
-        borderColor : prop.borderColor || 'transparent',
-        backgroundColor : prop.bgColor || 'transparent'
+        borderWidth: prop.borderWidth || 0,
+        borderColor: prop.borderColor || 'transparent',
+        backgroundColor: prop.bgColor || 'transparent',
+        borderRadius: prop.borderRadius || 0,
+        opacity: prop.opacity ? parseFloat(prop.opacity) / 100 : 1
       })
       $tag.removeClass('edit')
       App.editor.update($tag, 'change-prop')
@@ -130,22 +132,25 @@ export default (App, jQuery) => {
           top = parseInt($last.css('top')) + parseInt($last.height()) + 30;
         }
 
-        id++
+        id++;
 
         if (el.tag && (el.tag == 'div' || el.tag == 'hr' || el.tag == 'circle')) {
-          tag = el.tag
+          tag = el.tag;
           data = {
-            id : id,
-            options : App.template.getOptions(tag),
-            width : App.config.tag[tag].width,
-            left : ($editor.width() - App.config.tag[tag].width)/2,
-            top : top,
-            img : null,
-            tag : tag,
-            zIndex : id,
-            borderColor : el.borderColor,
-            borderWidth : el.borderWidth
+            id: id,
+            options: App.template.getOptions(tag),
+            width: App.config.tag[tag].width,
+            left: ($editor.width() - App.config.tag[tag].width)/2,
+            top: top,
+            img: null,
+            tag: tag,
+            zIndex: id,
+            borderColor: el.borderColor,
+            borderWidth: el.borderWidth,
+            borderRadius: el.borderRadius || 0,
+            opacity: el.opacity ? parseFloat(el.opacity) / 100 : 1
           }
+          console.log('data', data);
           if (el.tag == 'div' || el.tag == 'circle') {
             data.bgColor = el.bgColor;
             data.height = App.config.tag[tag].height;
@@ -153,14 +158,14 @@ export default (App, jQuery) => {
         } else {
           tag = el.table ? 'table' : el.getAttribute('data-tag')
           data = {
-            id : id,
-            options : App.template.getOptions(tag),
-            width : App.config.tag[tag].width,
-            left : ($editor.width() - App.config.tag[tag].width)/2,
-            top : top,
-            img : typeof el.table == 'undefined' && el.getAttribute('data-img') ? routeImages + el.getAttribute('data-img') : null,
-            tag : tag,
-            zIndex : id
+            id: id,
+            options: App.template.getOptions(tag),
+            width: App.config.tag[tag].width,
+            left: ($editor.width() - App.config.tag[tag].width)/2,
+            top: top,
+            img: typeof el.table == 'undefined' && el.getAttribute('data-img') ? routeImages + el.getAttribute('data-img') : null,
+            tag: tag,
+            zIndex: id
           }
           // is image
           if ($(el).children('img').length) {
@@ -181,6 +186,7 @@ export default (App, jQuery) => {
           el.top += 20
         }
         data = el
+        console.log('data edit', el);
         id = data.id
         tag = data.tag
         top = data.top
@@ -234,10 +240,14 @@ export default (App, jQuery) => {
       }
     }
 
+    editor.getBorderRadio = function ($el) {
+      return $el.css('MozBorderRadius') || $el.css('-moz-border-radius-topleft') || $el.css('-webkit-border-top-left-radius')
+    }
+
     editor.edit = function ($tag) {
       App.data.$edit = $tag
       let tag = $tag.data('tag')
-      console.log('edit: ', $tag)
+      console.log('edit tag', $tag)
       if (tag == 'img') {
         let $images = $('#images').find('.btn-bg-image')
         $images.removeClass('active')
@@ -252,6 +262,10 @@ export default (App, jQuery) => {
         App.setting.cpDivBg.setColor(App.rgb2hex($el.css('backgroundColor')))
         App.setting.cpDivBorder.setColor(App.rgb2hex($el.css('borderLeftColor')))
         App.setting.$divBorder.val(parseInt($el.css('borderLeftWidth')))
+        App.setting.$divOpacity.val(parseFloat($el.css('opacity')) * 100)
+        App.setting.$divSquare.prop('checked', editor.getBorderRadio($el) != '50%')
+        App.setting.$divCircle.prop('checked', editor.getBorderRadio($el) == '50%')
+        App.setting.$btnDivSave.children('span').html('Actualizar')
         App.modal.show('modal-div')
       } else if (tag == 'hr') {
         let $el = $tag.find('.tag-edit').children('hr')
@@ -303,11 +317,15 @@ export default (App, jQuery) => {
         }
         if (data.tag == 'div' || data.tag == 'hr' || data.tag == 'circle') {
           let $el = $tag.find('.tag-edit').children(data.tag == 'circle' ? 'div' : data.tag)
-          data.borderColor = $el.css('borderColor')
-          data.borderWidth = $el.css('borderWidth')
           if (data.tag == 'div') {
+            data.borderColor = $el.css('borderLeftColor')
+            data.borderWidth = $el.css('borderLeftWidth')
             data.bgColor = $el.css('backgroundColor')
+            data.opacity = $el.css('opacity')
+            data.borderRadius = editor.getBorderRadio($el)
             data.height = parseInt($tag.css('height'))
+
+            console.log('div data', data);
           }
         }
         App.data.update(data, step)
@@ -359,7 +377,7 @@ export default (App, jQuery) => {
       if (App.data.getCopy()) {
         let data = App.data.getCopy()
         data.copy = true
-        App.editor.add(data)
+        App.editor.add(data, false)
       }
     }
 

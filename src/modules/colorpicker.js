@@ -46,6 +46,7 @@ export default App => {
     }
 
     cp.setColor = function (color) {
+      cp.resetColor();
       $colorpicker.find('.note-color-btn[data-color="' + color + '"]').addClass('active')
     }
 

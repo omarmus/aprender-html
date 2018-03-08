@@ -3,7 +3,7 @@ export default (App, jQuery) => {
   App.setting = (function ($) {
 
     const $page = $('#page')
-    const routeBgImages = 'images/'
+    const routeBgImages = 'static/images/'
     let cpBg = null
 
     let cpTable = null
@@ -11,8 +11,12 @@ export default (App, jQuery) => {
     let cpDivBg = null
     let cpDivBorder = null
     let $divBorder = null
+    let $divOpacity = null
+    let $divSquare = null
+    let $divCircle = null
     let $divBorderTrans = null
     let $divBgTrans = null
+    let $btnDivSave = null
 
     let cpHrBorder = null
     let $hrBorder = null
@@ -72,13 +76,17 @@ export default (App, jQuery) => {
 
       // Contenedor Div
       $divBorder = $('#div-border')
+      $divOpacity = $('#div-opacity')
+      $divSquare = $('#div-square')
+      $divCircle = $('#div-circle')
       $divBgTrans = $('#div-bg-transparent')
       $divBorderTrans = $('#div-border-transparent')
+      $btnDivSave = $('#btn-insert-div')
 
       cpDivBg = new App.colorpicker('#div-bg-colorpicker')
       cpDivBorder = new App.colorpicker('#div-border-colorpicker')
 
-      $('#btn-insert-div').on('click', function () {
+      $btnDivSave.on('click', function () {
         let divBg = cpDivBg.getColor()
         let divBorder = cpDivBorder.getColor()
         let border = App.setting.$divBorder.val()
@@ -86,7 +94,9 @@ export default (App, jQuery) => {
           tag : 'div',
           borderWidth : border,
           borderColor : $divBorderTrans[0].checked ? 'transparent' : (cpDivBorder.getColor() ? cpDivBorder.getColor() : 'transparent'),
-          bgColor : $divBgTrans[0].checked ? 'transparent' : (cpDivBg.getColor() ? cpDivBg.getColor() : 'transparent')
+          bgColor : $divBgTrans[0].checked ? 'transparent' : (cpDivBg.getColor() ? cpDivBg.getColor() : 'transparent'),
+          opacity: $divOpacity.val(),
+          borderRadius: $divSquare.prop('checked') ? '0': '50%'
         }
         if (App.data.$edit) {
           App.editor.setProp(App.data.$edit, data)
@@ -189,6 +199,10 @@ export default (App, jQuery) => {
     setting.$divBorderTrans = $divBorderTrans
     setting.$divBgTrans = $divBgTrans
     setting.$hrBorder = $hrBorder
+    setting.$divOpacity = $divOpacity
+    setting.$divSquare = $divSquare
+    setting.$divCircle = $divCircle
+    setting.$btnDivSave = $btnDivSave
 
     setting.routeBgImages = routeBgImages
 
@@ -206,6 +220,9 @@ export default (App, jQuery) => {
         $divBorder.val(1)
         $divBgTrans[0].checked = false
         $divBorderTrans[0].checked = false
+        $divOpacity.val(100)
+        $divSquare.prop('checked', true)
+        $btnDivSave.children('span').html('Insertar')
         App.modal.show('modal-div')
       } else if (option == 'hr') {
         cpHrBorder.resetColor()

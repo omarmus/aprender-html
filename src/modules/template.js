@@ -16,11 +16,18 @@ export default (App, jQuery) => {
     template.ol = $('#tmpl-ol').html()
     template.table = $('#tmpl-table').html()
     template.options = $('#tmpl-options').html()
-    template.tag = $('#tmpl-tag').html()
     template.page = $('#tmpl-page').html()
-    template.html = $('#tmpl-html').html()
     template.div = $('#tmpl-div').html()
     template.hr = $('#tmpl-hr').html()
+    template.tag = function (data) {
+      return `
+        <div
+          class="tag ${data.class}"
+          style="width: ${data.width}px; left: ${data.left}px; top: ${data.top}px; height: ${data.height}px">
+          <div class="tag-zindex" style="z-index: ${data.zIndex}; border: ${data.borderWidth || 0} solid ${data.borderColor || 'transparent'}; background-color: ${data.bgColor || 'transparent'}; opacity: ${data.opacity || 1}; border-radius: ${data.borderRadius || 0};">${data.text}</div>
+        </div>
+      `
+    }
 
     template.getOptions = function (tag) {
       return App.nano(App.template.options, {

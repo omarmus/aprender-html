@@ -1,5 +1,5 @@
 // Submodule preview
-export default (App, jQuery) => {
+export default (App, jQuery, store) => {
   App.preview = (function ($) {
 
     let $page = $('#page')
@@ -41,7 +41,7 @@ export default (App, jQuery) => {
           tagTop = tag.tag
           tagId = tag.id
         }
-        tagsHtml += App.nano(App.template.tag, tag)
+        tagsHtml += App.template.tag(tag)
       }
       settings.tags = tagsHtml
       settings.height = parseInt(App.editor.get(tagTop, tagId).css('height')) + maxTop + 20
@@ -49,16 +49,40 @@ export default (App, jQuery) => {
       return settings
     }
 
-    function init() {
+    function getTemplate (data) {
+      let tmpl = `
+        <link rel="stylesheet" href="static/css/preview.css" />
+        <div class="main" style="background-color: ${data.bgColor}; background-image: url(${data.bgImage}); background-attachment: ${data.bgAttachment}">
+          <div class="page-container preview">
+            <div class="editor-container">
+              <div class="editor-content" style="height: ${data.height}px;">${data.tags}</div>
+            </div>
+          </div>
+        </div>
+      `;
+      return tmpl;
+    }
 
+    function createIframe (html, data) {
+      var iframe = document.getElementById('iframe-preview');
+
+      iframe.src = 'javascript:void((function(){var script = document.createElement(\'script\');' +
+        'script.innerHTML = "(function() {' +
+        'document.open();document.domain=\'' + document.domain +
+        '\';document.close();})();";' +
+        `document.write("<head>" + script.outerHTML + '</head><body></body>');})())`;
+
+      iframe.contentWindow.document.write(html);
+      let body = iframe.contentWindow.document.body;
+      body.style.backgroundImage = `url(${data.bgImage})`;
+      body.style.backgroundColor = data.bgColor;
+      body.style.backgroundAttachment = 'fixed';
+    }
+
+    function init () {
       $('#btn-preview').on('click', function () {
         let page = App.preview.page()
-        let frame = frames.preview.document.getElementById('container').innerHTML = App.nano(App.template.page, page)
-        $(frames.preview.document.body).css({
-          backgroundColor: page.bgColor,
-          backgroundImage: 'url(' + page.bgImage + ')',
-          backgroundAttachment: 'fixed'
-        });
+        createIframe(getTemplate(page), page);
         App.modal.show('modal-preview')
       })
     }

@@ -24,12 +24,13 @@ import AppTemplate from './components/AppTemplate';
 
 import Editor from './modules/index';
 import $ from './lib/jquery/jquery-2.2.3.min.js';
+import store from './store';
 
 export default {
   name: 'app',
   mounted () {
     // Iniciando editor
-    Editor.init($);
+    Editor.init($, store);
   },
   data () {
     return {

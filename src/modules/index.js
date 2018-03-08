@@ -16,10 +16,12 @@ import filter from './filter';
 import form from './form';
 import load from './load';
 
+let App = null;
+
 export default {
-  init (jQuery) {
+  init (jQuery, store) {
     // Main Module
-    var App = (function (app, $) {
+    App = (function (app, $) {
 
       app.nano = function (template, data) {
         return template.replace(/\{([\w\.]*)\}/g, (str, key) => {
@@ -35,8 +37,7 @@ export default {
       }
 
       app.rgb2hex = function (rgb) {
-        console.log(rgb)
-        if (typeof rgb == 'undefined' || rgb == null) {
+        if (typeof rgb == 'undefined' || rgb == null || rgb == '') {
           return ''
         }
         if (rgb == 'transparent') {
@@ -46,34 +47,38 @@ export default {
           return rgb;
         }
 
-        rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+        let rgba = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+        if (rgba == null) {
+          rgba = rgb.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d+)\)$/)
+        }
         function hex(x) {
           return ("0" + parseInt(x).toString(16)).slice(-2)
         }
-        return ("#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3])).toUpperCase()
+        return ("#" + hex(rgba[1]) + hex(rgba[2]) + hex(rgba[3])).toUpperCase()
       }
 
       console.log('Editor iniciado!');
 
       return app
-    })(App || {}, jQuery)
+    })(App || {}, jQuery, store)
 
-    template(App, $);
-    page(App);
-    config(App, $);
-    colorpicker(App);
-    storage(App, $);
-    data(App, $);
-    event(App, $);
-    editor(App, $);
-    setting(App, $);
-    preview(App, $);
-    modal(App, $);
-    zip(App, $);
-    filter(App);
-    form(App, $);
-    load(App, $);
-
-    console.dir('App', App);
+    template(App, $, store);
+    page(App, store);
+    config(App, $, store);
+    colorpicker(App, store);
+    storage(App, $, store);
+    data(App, $, store);
+    event(App, $, store);
+    editor(App, $, store);
+    setting(App, $, store);
+    preview(App, $, store);
+    modal(App, $, store);
+    zip(App, $, store);
+    filter(App, store);
+    form(App, $, store);
+    load(App, $, store);
+  },
+  getApp () {
+    return App;
   }
 }

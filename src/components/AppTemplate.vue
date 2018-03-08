@@ -169,7 +169,7 @@
     </script>
 
     <script type="text/js-tmpl" id="tmpl-btn-picker">
-      <button type="button" class="btn btn-default navbar-btn" id="btn-learn" ><i class="fa fa-star"></i> Lecciones</button>
+      <button style="background-color:{color}" class="note-color-btn" type="button" data-toggle="tooltip" data-placement="bottom" data-color="{color}" title="{color}"></button>
     </script>
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modal-main">

@@ -25,7 +25,7 @@
               <!-- <button type="button" class="btn btn-default navbar-btn" id="btn-download"><i class="fa fa-download"></i> Descargar página</button> -->
               <button type="button" class="btn btn-default navbar-btn" id="btn-preview" ><i class="fa fa-eye"></i> Vista previa</button>
               <!-- <button type="button" class="btn btn-default navbar-btn" id="btn-demo" ><i class="fa fa-star"></i> Demo</button> -->
-              <button type="button" class="btn btn-default navbar-btn" @click="learn" id="btn-learn" ><i class="fa fa-star"></i> Lecciones</button>
+              <button type="button" class="btn btn-default navbar-btn" @click="learn" id="btn-learning" ><i class="fa fa-star"></i> Lecciones</button>
             </li>
             <li class="dropdown hide">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Mi usuario <span class="caret"></span></a>
@@ -49,7 +49,7 @@ export default {
     learn () {
       const App = editor.getApp();
       console.log('click', App);
-      App.modal.show('modal-learning');
+      App.modal.show('modal-learning')
     }
   }
 }

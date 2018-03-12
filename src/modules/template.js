@@ -22,8 +22,8 @@ export default (App, jQuery) => {
     template.tag = function (data) {
       return `
         <div
-          class="tag ${data.class}"
-          style="width: ${data.width}px; left: ${data.left}px; top: ${data.top}px; height: ${data.height}px">
+          class="tag ${data.class || ''}"
+          style="width: ${data.width}px; left: ${data.left}px; top: ${data.top}px; height: ${data.height ? data.height + 'px' : 'auto' }">
           <div class="tag-zindex" style="z-index: ${data.zIndex}; border: ${data.borderWidth || 0} solid ${data.borderColor || 'transparent'}; background-color: ${data.bgColor || 'transparent'}; opacity: ${data.opacity || 1}; border-radius: ${data.borderRadius || 0};">${data.text}</div>
         </div>
       `

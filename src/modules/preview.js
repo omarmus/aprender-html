@@ -81,8 +81,11 @@ export default (App, jQuery, store) => {
 
     function init () {
       $('#btn-preview').on('click', function () {
-        let page = App.preview.page()
-        createIframe(getTemplate(page), page);
+        let page = App.preview.page();
+        let html = getTemplate(page);
+        console.log('html', html);
+        createIframe(html, page);
+        $('#show-code').html(html.replace(/</gi, '&lt;').replace(/>/gi, '&gt;'));
         App.modal.show('modal-preview')
       })
     }

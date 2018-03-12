@@ -50,9 +50,21 @@ body {
   right: 0;
   z-index: 10103;
 }
+.modal-header {
+  .modal-title {
+    display: inline-block;
+  }
+}
 .modal {
   z-index: 10104;
   font-size: 14px;
+}
+.btn-container {
+  margin-bottom: 1px;
+}
+.btn-code {
+  float: right;
+  margin-right: 15px;
 }
 .input-code {
   font-size: 28px;

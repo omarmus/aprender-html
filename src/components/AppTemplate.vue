@@ -365,11 +365,15 @@
       <div class="modal-dialog modal-preview">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title"><i class="fa fa-eye"></i> Vista previa</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="btn btn-primary btn-code" @click="showCode = !showCode">
+              <i className="fa fa-code"></i> {{ showCode ? 'Mostrar vista previa' : 'Mostrar código fuente' }}
+            </button>
           </div>
           <div class="modal-body" id="frame-container">
-            <iframe id="iframe-preview" class="preview-iframe"></iframe>
+            <pre v-show="showCode" id="show-code"></pre>
+            <iframe id="iframe-preview" v-show="!showCode" class="preview-iframe"></iframe>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-check"></i> Terminar</button>
@@ -440,7 +444,8 @@
 export default {
   data () {
     return {
-      opacity: 100
+      opacity: 100,
+      showCode: false
     }
   }
 }

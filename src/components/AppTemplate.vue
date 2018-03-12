@@ -468,11 +468,11 @@ export default {
     validar () {
       services.getPage(this.code)
       .then(response => {
-        if (response.length) {
+        if (response) {
           const App = editor.getApp();
 
           App.modal.hide('modal-learning');
-          App.editor.new(response[0]);
+          App.editor.new(response);
         } else {
           alert('¡El código es incorrecto! Vuelve a intentar.')
         }

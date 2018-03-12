@@ -25,5 +25,16 @@ module.exports = function (models) {
     res.send(result);
   });
 
+  api.post('/page', async (req, res, next) => {
+    const { code } = req.body;
+    models.pages.findOne({
+      where: {
+        code
+      }
+    }).then(page => {
+      res.send(page);
+    })
+  })
+
   return api;
 };

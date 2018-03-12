@@ -77,12 +77,17 @@ export default (App, jQuery) => {
       return button.render()
     }
 
-    editor.new = function () {
-      App.data.destroy()
-      $editor.find('.tag').remove()
-      $page.css('background-color', '')
-      $page.css('background-image', '')
+    editor.new = function (page) {
+      App.data.destroy();
+      $editor.find('.tag').remove();
+      $page.css('background-color', '');
+      $page.css('background-image', '');
       // $page.css('background-attachment', 'scroll')
+
+      if (page && page.id) {
+        App.data.setPage(page);
+        App.data.load();
+      }
     }
 
     editor.setImg = function ($tag, image) {
@@ -186,7 +191,6 @@ export default (App, jQuery) => {
           el.top += 20
         }
         data = el
-        console.log('data edit', el);
         id = data.id
         tag = data.tag
         top = data.top

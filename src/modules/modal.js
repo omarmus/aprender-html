@@ -18,7 +18,9 @@ export default (App, jQuery) => {
 
     modal.hide = function (id, callback) {
       $('#' + (id || idDefault)).modal('hide').on('hidden.bs.modal', function () {
-        callback()
+        if (typeof callback === 'function') {
+          callback();
+        }
       })
     }
 

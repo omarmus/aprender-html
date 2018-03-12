@@ -26,6 +26,7 @@
               <button type="button" class="btn btn-default navbar-btn" id="btn-preview" ><i class="fa fa-eye"></i> Vista previa</button>
               <!-- <button type="button" class="btn btn-default navbar-btn" id="btn-demo" ><i class="fa fa-star"></i> Demo</button> -->
               <button type="button" class="btn btn-default navbar-btn" @click="learn" id="btn-learning" ><i class="fa fa-star"></i> Lecciones</button>
+              <!-- <button type="button" class="btn btn-default navbar-btn" @click="save"><i class="fa fa-save"></i> Guardar</button> -->
             </li>
             <li class="dropdown hide">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Mi usuario <span class="caret"></span></a>
@@ -43,13 +44,29 @@
 
 <script>
 import editor from '../modules/index';
+import services from '../services/services';
 
 export default {
   methods: {
     learn () {
       const App = editor.getApp();
-      console.log('click', App);
+
+      const $code = $('#input-code');
+      $code.val('');
+      setTimeout(() => {
+        $code.focus();
+      }, 500);
+
       App.modal.show('modal-learning')
+    },
+    save () {
+      const App = editor.getApp();
+
+      const page = App.data.getPage();
+      services.savePage(page)
+      .then(response => {
+        App.data.setPage(response);
+      });
     }
   }
 }

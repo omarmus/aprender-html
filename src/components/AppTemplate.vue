@@ -246,6 +246,9 @@
               <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="img11.jpg"><img src="../../static/images/img11.jpg" alt=""></a>
               <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="img12.jpg"><img src="../../static/images/img12.jpg" alt=""></a>
               <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="img13.jpg"><img src="../../static/images/img13.jpg" alt=""></a>
+              <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="html.svg"><img src="../../static/images/html.svg" alt=""></a>
+              <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="css.svg"><img src="../../static/images/css.svg" alt=""></a>
+              <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="bolivia.png"><img src="../../static/images/bolivia.png" alt=""></a>
             </div>
           </div>
           <div class="modal-footer">
@@ -423,17 +426,21 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title"><i class="fa fa-star"></i> Aprende HTML</h4>
           </div>
-          <div class="modal-body" id="frame-container">
-            <div class="alert alert-info">
-              <i class="fa fa-info"></i> Ingresa el código que encontraste para aprender una lección
+          <form @submit.prevent="validar">
+            <div class="modal-body" id="frame-container">
+              <div class="alert alert-info">
+                <i class="fa fa-info"></i> Ingresa el código que encontraste para aprender una lección
+              </div>
+              <div class="form-group">
+                <textarea class="form-control input-code" id="input-code" v-model="code"></textarea>
+              </div>
             </div>
-            <div class="form-group">
-              <textarea class="form-control input-code"></textarea>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" @click="code=''"><i class="fa fa-eraser"></i> Limpiar</button>
+              <button type="submit" class="btn btn-success" :disabled="code.length == 0"><i class="fa fa-check"></i> Validar código</button>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-check"></i> Validar código</button>
-          </div>
+
+          </form>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -441,11 +448,30 @@
 </template>
 
 <script>
+import services from '../services/services';
+import editor from '../modules/index';
+
 export default {
   data () {
     return {
       opacity: 100,
-      showCode: false
+      showCode: false,
+      code: ''
+    }
+  },
+  methods: {
+    validar () {
+      services.getPage(this.code)
+      .then(response => {
+        if (response.length) {
+          const App = editor.getApp();
+
+          App.modal.hide('modal-learning');
+          App.editor.new(response[0]);
+        } else {
+          alert('¡El código es incorrecto! Vuelve a intentar.')
+        }
+      });
     }
   }
 }

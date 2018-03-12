@@ -97,6 +97,11 @@ export default (App, jQuery) => {
       return page
     }
 
+    data.setPage = function (data) {
+      page = data;
+      App.storage.set(page);
+    }
+
     data.setCopy = function (id) {
       copy = App.data.getTag(id)
     }
@@ -164,7 +169,7 @@ export default (App, jQuery) => {
       return images
     }
 
-    data.destroy = function () {
+    data.destroy = function (page) {
       App.storage.destroy()
       page = new App.page().empty
       tags = {}

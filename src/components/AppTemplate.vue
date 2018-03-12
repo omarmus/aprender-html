@@ -194,6 +194,8 @@
                     <a href="" class="btn-bg-image thumbnail" data-img="">Sin imagen</a>
                     <a href="" class="btn-bg-image thumbnail" data-img="bg01.jpg"><img src="../../static/images/bg01.jpg" alt=""></a>
                     <a href="" class="btn-bg-image thumbnail" data-img="bg02.jpg"><img src="../../static/images/bg02.jpg" alt=""></a>
+                    <a href="" class="btn-bg-image thumbnail" data-img="sucre2.jpg"><img src="../../static/images/sucre2.jpg" alt=""></a>
+                    <a href="" class="btn-bg-image thumbnail" data-img="sucre3.jpg"><img src="../../static/images/sucre3.jpg" alt=""></a>
                     <a href="" class="btn-bg-image thumbnail" data-img="bg03.jpg"><img src="../../static/images/bg03.jpg" alt=""></a>
                     <a href="" class="btn-bg-image thumbnail" data-img="bg04.jpg"><img src="../../static/images/bg04.jpg" alt=""></a>
                     <a href="" class="btn-bg-image thumbnail" data-img="bg05.jpg"><img src="../../static/images/bg05.jpg" alt=""></a>
@@ -231,7 +233,10 @@
               <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="logo.png"><img src="../../static/images/logo.png" alt=""></a>
               <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="logo2.png" style="background-color: white;"><img src="../../static/images/logo2.png" alt=""></a>
               <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="presidencia.png"><img src="../../static/images/presidencia.png" alt=""></a>
-              <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="flisol.jpg"><img src="../../static/images/flisol.jpg" alt=""></a>
+              <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="sucre.jpg"><img src="../../static/images/sucre.jpg" alt=""></a>
+              <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="sucre2.jpg"><img src="../../static/images/sucre2.jpg" alt=""></a>
+              <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="sucre3.jpg"><img src="../../static/images/sucre3.jpg" alt=""></a>
+              <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="sucre4.jpeg"><img src="../../static/images/sucre4.jpeg" alt=""></a>
               <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="isotipo.png"><img src="../../static/images/isotipo.png" alt=""></a>
               <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="img01.jpg"><img src="../../static/images/img01.jpg" alt=""></a>
               <a href="" class="btn-bg-image thumbnail" data-tag="img" data-img="img02.jpg"><img src="../../static/images/img02.jpg" alt=""></a>
